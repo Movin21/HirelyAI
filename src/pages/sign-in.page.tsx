@@ -1,5 +1,5 @@
-const SignIn = () => {
-  return <div>sign-in.page</div>;
-};
+function SignInPage() {
+  return <div>Sign In</div>;
+}
 
-export default SignIn;
+export default SignInPage;

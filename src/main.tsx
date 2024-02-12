@@ -1,13 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import RootLayout from "./layout/RootLayout";
-import Home from "./pages/Home/home.page";
-import SignIn from "./pages/sign-in.page";
-import SignUp from "./pages/sign-up.page";
-import MainLayout from "./layout/MainLayout";
-import JobPage from "./pages/Job/Job.page";
+import "./index.css";
+import MainLayout from "./layout/main.layout";
+import RootLayout from "./layout/root.layout";
+import HomePage from "./pages/home/home.page";
+import SignInPage from "./pages/sign-in.page";
+import SignUpPage from "./pages/sign-up.page";
+import JobPage from "./pages/job/job.page";
+import AdminMainLayout from "./layout/admin.layout";
+import AdminJobPostsPage from "./pages/admin/jobPosts/admin-job-posts.page";
+import JobCreatePage from "./pages/admin/createJob/job-create.page";
+import AdminJobPage from "./pages/admin/job/admin-job.page";
+import AdminJobApplicationPage from "./pages/admin/jobApplication/admin-job-application.page";
 
 const router = createBrowserRouter([
   {
@@ -17,29 +22,50 @@ const router = createBrowserRouter([
         path: "/",
         element: <MainLayout />,
         children: [
-          { path: "home", element: <Home /> },
           {
-            path: "job/",
-            children: [
-              {
-                path: ":id",
-                element: <JobPage />,
-              },
-            ],
+            path: "home",
+            element: <HomePage />,
+          },
+          {
+            path: "job/:id",
+            element: <JobPage />,
+          },
+        ],
+      },
+      {
+        path: "admin",
+        element: <AdminMainLayout />,
+        children: [
+          {
+            path: "jobs",
+            element: <AdminJobPostsPage />,
+          },
+          {
+            path: "job/create",
+            element: <JobCreatePage />,
+          },
+          {
+            path: "job/:id",
+            element: <AdminJobPage />,
+          },
+          {
+            path: "job/:id/application/:applicationId",
+            element: <AdminJobApplicationPage />,
           },
         ],
       },
       {
         path: "/sign-in",
-        element: <SignIn />,
+        element: <SignInPage />,
       },
       {
         path: "/sign-up",
-        element: <SignUp />,
+        element: <SignUpPage />,
       },
     ],
   },
 ]);
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <RouterProvider router={router} />

@@ -1,34 +1,41 @@
-import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin } from "lucide-react";
-import { Briefcase } from "lucide-react";
-import { Link } from "react-router-dom";
-interface JobCardProps {
-  _id: String;
-  title: String;
-  type: String;
-  location: String;
-  isAdmin: boolean;
-}
-const JobSection = (props: JobCardProps) => {
+import JobCard from "@/components/shared/JobCard";
+import { useEffect, useState } from "react";
+import { Job } from "@/types/job";
+
+function JobSection() {
+  const [jobs, setJobs] = useState<Job[]>([]);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      const res = await fetch("http://localhost:8000/jobs", {
+        method: "GET",
+      });
+      const data: Job[] = await res.json();
+      return data;
+    };
+
+    fetchJobs().then((data) => setJobs(data));
+  }, []);
+
   return (
-    <Link to={props.isAdmin ? `/admin/job/${props._id}` : `/job/${props._id}`}>
-      <Card>
-        <CardHeader>
-          <CardTitle>{props.title}</CardTitle>
-        </CardHeader>
-        <CardFooter className="gap-x-4">
-          <div className=" flex items-center gap-x-2">
-            <Briefcase />
-            <span>{props.type} </span>
-          </div>
-          <div className=" flex items-center gap-x-2">
-            <MapPin />
-            <span> {props.location}</span>
-          </div>
-        </CardFooter>
-      </Card>
-    </Link>
+    <section className="py-8">
+      <h2>Available Jobs</h2>
+      <div className="mt-4 flex flex-col gap-y-8">
+        {jobs.map((job) => {
+          return (
+            <JobCard
+              key={job._id}
+              title={job.title}
+              type={job.type}
+              location={job.location}
+              _id={job._id}
+              isAdmin={false}
+            />
+          );
+        })}
+      </div>
+    </section>
   );
-};
+}
 
 export default JobSection;
