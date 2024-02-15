@@ -50,7 +50,7 @@ function JobPage() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userId: "manupa",
+        userId: "movindu",
         fullName: formData.fullName,
         job: id,
         answers: [formData.a1, formData.a2, formData.a3],
