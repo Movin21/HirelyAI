@@ -1,13 +1,13 @@
+import Navigation from "@/components/shared/Navigation";
 import { Outlet } from "react-router-dom";
-import Navigation from "../components/shared/Navigation";
 
-const MainLayout = () => {
+function MainLayout() {
   return (
     <div>
       <Navigation />
       <Outlet />
     </div>
   );
-};
+}
 
 export default MainLayout;
